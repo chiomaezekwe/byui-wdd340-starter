@@ -26,7 +26,19 @@ app.set("layout", "./layouts/layout") // not at views root
 app.use(static)
 
 // Index route
-app.get("/", function(req, res){res.render("index", {title: "HOME"})
+app.get("/", (req, res) => {res.render("index", {title: "Home Page", page: "HOME"})
+});
+
+app.get("/custom", (req, res) => {res.render("custom", {title: "Custom Page", page: "custom"})
+});
+
+app.get("/sedan", (req, res) => {res.render("sedan", {title: "Sedan", page: "sedan"})
+});
+
+app.get("/suv", (req, res) => {res.render("suv", {title: "Suv Page", page: "suv"})
+});
+
+app.get("/truck", (req, res) => {res.render("truck", {title: "Truck Page", page: "truck"})
 })
 
 /* ***********************
