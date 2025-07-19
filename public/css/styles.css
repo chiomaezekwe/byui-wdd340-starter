@@ -1,7 +1,7 @@
 /* --- MOBILE FIRST (default styles for small screen devices) --- */
 :root {
   --primary-color: #228B22;   /* Forest green */
-  --primary-color1: #5A78C1;  /* Glaucous blue */
+  --primary-color1: #0A1E4D;  /* Penn blue */
   --secondary-color: #e67e22; /* Tangerine orange */
   --accent-color: #CDDC39;    /* Pear green */
   --neutral-color: #ffffff;   /* White */
