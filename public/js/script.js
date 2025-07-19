@@ -46,29 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
   } 
 
-  // Clear container first (optional if reused or hot reload)
     container.innerHTML = "";
-
-    //vehicles.forEach(vehicle => {
-    //const figure = document.createElement("figure");
-
-    //const img = document.createElement("img");
-    //img.src = vehicle.src;
-    //img.alt = vehicle.alt;
-
-    //const caption1 = document.createElement("figcaption");
-    //caption1.textContent = vehicle.name;
-
-    //const caption2 = document.createElement("figcaption");
-    //caption2.textContent = vehicle.price;
-
-    //figure.appendChild(img);
-   // figure.appendChild(caption1);
-    //figure.appendChild(caption2);
-
-   // container.appendChild(figure);
-    //});
-
+    
     vehicles.forEach(vehicle => {
     const figure = document.createElement("figure");
 
