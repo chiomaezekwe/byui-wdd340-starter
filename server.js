@@ -29,15 +29,23 @@ app.use(static)
 app.get("/", (req, res) => {res.render("index", {title: "Home Page", page: "HOME"})
 });
 
+// CSE Motor route
+app.get("/", (req, res) => {res.render("index", {title: "Home Page", page: "CSE"})
+});
+
+// Custom route
 app.get("/custom", (req, res) => {res.render("custom", {title: "Custom Page", page: "custom"})
 });
 
+// Sedan  route
 app.get("/sedan", (req, res) => {res.render("sedan", {title: "Sedan", page: "sedan"})
 });
 
+// SUV route
 app.get("/suv", (req, res) => {res.render("suv", {title: "Suv Page", page: "suv"})
 });
 
+// Truck route
 app.get("/truck", (req, res) => {res.render("truck", {title: "Truck Page", page: "truck"})
 })
 

@@ -13,6 +13,8 @@
 /* Box Sizing */
 *, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Base Body Style */
@@ -38,6 +40,7 @@ h1 {
 h2, h3 {
   font-size: 1.3rem;
   margin-left: 0.5rem;
+  text-align: left;
 }
 
 /* Layout styling */
@@ -58,14 +61,13 @@ header {
   color: var(--neutral-color1);
   padding: 1rem;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
 }
 
 .siteName a {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: bold;   
 }
 
 #tools a {
@@ -74,7 +76,29 @@ header {
 
 #tools a:hover {
   text-decoration: underline;
+  color: var(--primary-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+.siteName a:hover {
+  color: var(--primary-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+#top-header {
+  display: flex;
+  justify-content: space-between; /* pushes items to edges */
+  align-items: center;
+  width: 100%;              /* ensure it takes full width */
+  padding: 12px 16px;
+}
+
+.siteName a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
 
 /* Navigation styling */
 .profile-container {
@@ -104,6 +128,7 @@ header {
 .profile-container nav a:hover,
 .profile-container nav a:focus {
   color: var(--secondary-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Main Content */
@@ -133,32 +158,32 @@ main {
 }
 
 .hero-content {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 0.25rem;
+  padding: 0.25rem; 
   max-width: 100%;
   position: absolute;  
-  top: 0.5%;              /* Adjust vertical position */
-  left: -20px;           /* Overlap left by 20px */
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 0.2rem 0.5rem;  
+  top: 0.05%;              /* Adjust vertical position */
+  left: -15px;             /* Overlap left */
   z-index: 2;
   max-width: 80%;
-  max-height: 240px;      /* limit height to prevent overlap */
+  max-height: 250px;      /* limit height to prevent overlap */
   overflow: hidden;       /* hide overflow content */
   border-radius: 4px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  margin-top: 0.1rem; 
-  transform: translateY(-50px); /* Moves container up by 20px */
+  margin-top: -1rem; 
+  transform: translateY(2px); /* Moves container up by 20px */
+  background-color: rgba(0, 0, 0, 0.01); 
+   line-height: 1.5;
 }
 
 
 .hero-image {
   width: 100%;
-  max-height: 50px;     
+  max-height: 35px;     
   object-fit: contain;
-  margin-top: 0.05rem;    /* space from text above */
+  margin-bottom: 0.5rem;
+  margin-top: 0.9rem;
   display: block;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .hero-image-container {
@@ -168,12 +193,23 @@ main {
   margin-left: 0; /* To reset margin for mobile */
 }
 
+.hero-image-container img {
+   width: 97%;  /* Shrinks image to 97% of container's width */
+   height: auto; /* Maintains aspect ratio */
+   display: block; /* Removes inline space */
+   margin: 0 auto; /* Optional: center image horizontally */
+   margin-left: 50px; /* Moves image to the left */
+  }
+
+
 /* Reviews */
 .review ul {
   list-style-type: disc;
   padding-left: 1.5rem;
   font-size: 1rem;
+   line-height: 2.5;
 }
+
 
 /* Upgrades */
 .upgrade {
@@ -192,7 +228,7 @@ main {
 
 .upgrade-container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr); /* 2 equal columns */
   gap: 1rem;
 }
 
@@ -201,18 +237,18 @@ main {
 }
 
 .upgrade-item img {
-  width: 60px;
-  height: 40px;
+  width: 35px;
+  height: 20px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.7rem;
 }
 
 /* Background color applied to image wrapper */
 .img-wrapper {
   background-color: var(--primary-color);
-  padding: 10px;
-  border-radius: 10px;
+  padding: 3px;
+  border-radius: 6px;
 }
 
 /* Image size and styling */
@@ -277,6 +313,7 @@ footer {
 footer p:hover {
   color: var(--accent-color);
   font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 
@@ -303,16 +340,49 @@ footer p:hover {
     margin-left: 2rem;
   }
 
-  .hero-content {
-    top: 15%;    /* tweak vertical offset */
-    left: -30px; 
-    max-width: 40%;
-    max-height: 240px;
+  .hero-image-container img {
+   width: 100%; 
+   margin-left: 20px; /* Moves image 20px to the left */
   }
 
+  .hero-content {
+    top: 10%;    /* tweak vertical offset */
+    left: -35px; 
+    max-width: 60%;
+    max-height: 280px;
+    padding: 0.50rem;
+    left: -20px;           /* Overlap left by 20px */ 
+    transform: translateY(10px); /* Moves container up */
+  }
+
+  .hero-image {
+    width: 100%;
+    max-height: 50px;    
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+    margin-top: 0.9rem;
+    display: block;
+    border-radius: 6px;
+  }
+  
   .upgrade-container {
     grid-template-columns: repeat(2, 1fr);
   }
+
+.upgrade-item img {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+/* Background color applied to image wrapper */
+.img-wrapper {
+  background-color: var(--primary-color);
+  padding: 10px;
+  border-radius: 10px;
+}
 
   #templateContainer {
     grid-template-columns: repeat(2, 1fr);
@@ -340,22 +410,29 @@ footer p:hover {
     margin-left: 0;
   }
 
+  .hero-image-container img {
+    width: 100%;  
+    margin-left: 25px; /* Moves image 25px to the left */
+  }
+
   .hero-content {
-    top: 5%;
+    top: 10%;
     left: -40px;
-    max-width: 35%;
-    max-height: 240px;
-    transform: translateY(-20px); /* Moves the container up by 20px */
+    max-width: 60%;
+    max-height: 300px;
+    transform: translateY(10px); /* Moves the container up */
+    background-color: rgba(0, 0, 0, 0.01); 
   }
 
   .hero-image {
-  width: 100%;
-  max-height: 50px;     /* or whatever fits your design */
-  object-fit: contain;
-  margin-top: 0.05rem;    /* space from text above */
-  display: block;
-  border-radius: 6px;
-}
+    width: 100%;
+    max-height: 50px;     
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    display: block;
+    border-radius: 6px;
+  }
 
   .upgrade-container {
     grid-template-columns: repeat(2, 1fr);
@@ -378,6 +455,21 @@ footer p:hover {
     order: 0; /* upgrade on the left */
     flex: 1;
   }
+
+.upgrade-item img {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+/* Background color applied to image wrapper */
+.img-wrapper {
+  background-color: var(--primary-color);
+  padding: 10px;
+  border-radius: 10px;
+}
 
   #templateContainer {
     grid-template-columns: repeat(3, 1fr);
