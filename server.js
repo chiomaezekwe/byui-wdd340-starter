@@ -11,6 +11,9 @@ const app = express()
 const static = require("./routes/static")
 const expressLayouts = require("express-ejs-layouts")
 
+const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute") /* added this line */
+
 
 /* ***********************
  * View Engine and Templates
@@ -25,9 +28,17 @@ app.set("layout", "./layouts/layout") // not at views root
  *************************/
 app.use(static)
 
+app.use(express.static("public"))  /* added this line*/
+
+// Inventory Routes
+app.use("/inv", inventoryRoute) /* added this line */
+
 // Index route
-app.get("/", (req, res) => {res.render("index", {title: "Home Page", page: "HOME"})
-});
+//app.get("/", (req, res) => {res.render("index", {title: "Home Page", page: "HOME"})
+//});
+
+app.get("/", (baseController.buildHome));
+
 
 // CSE Motor route
 app.get("/", (req, res) => {res.render("index", {title: "Home Page", page: "CSE"})

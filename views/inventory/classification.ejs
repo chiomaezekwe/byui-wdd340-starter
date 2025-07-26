@@ -1,0 +1,15 @@
+<%# EJS or HTML Block %>
+<%# the content Heading %>  
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%# A message block %>
+<%# messages() %>
+
+<%# Inventory items display %>
+<div id="templateContainer">  <%# added this lines (13 and 15) to fit my initial CSS styling %>
+    <%- grid %>
+</div>
