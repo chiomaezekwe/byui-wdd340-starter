@@ -22,7 +22,7 @@ Util.getNav = async function (req, res, next) {
     list += "</li>"
   })
   list += "</ul>"*/
-  /* Modified these lines (26 - 33) to fit my initial CSS styling */
+  /* Modified these lines (26 - 33) to fit my initial CSS styling W03*/
     let list = '<nav>'
     list += '<a href="/" title="Home page">Home</a>'
     data.rows.forEach((row) => {
@@ -62,7 +62,7 @@ Util.buildClassificationGrid = async function(data){
     })
     grid += '</ul>' */
 
-    /* Modified this section lines 65 - 73 to fit my initial CSS styling*/
+    /* Modified this section lines 65 - 74 to fit my initial CSS styling W03*/
     grid = ''
     data.forEach(vehicle => {
         grid += '<figure>'
@@ -79,6 +79,23 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* ************************
+W03 Added the function to wrap vehicle data in HTML
+*************************** */
 
+Util.buildDetailView = function(vehicle) {
+  let html = `
+    <div class="vehicle-detail">
+      <h1>${vehicle.inv_make} ${vehicle.inv_model}</h1>
+      <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}" />
+      <p><strong>Price:</strong> $${vehicle.inv_price.toLocaleString('en-US')}</p>
+      <p><strong>Year:</strong> ${vehicle.inv_year}</p>
+      <p><strong>Mileage:</strong> ${vehicle.inv_miles.toLocaleString('en-US')} miles</p>
+      <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+      <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+    </div>
+  `
+  return html
+}
 
 module.exports = Util

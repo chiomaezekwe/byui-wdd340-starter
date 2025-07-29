@@ -316,6 +316,31 @@ footer p:hover {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* W03 vehicle details styling mobile */
+
+.vehicle-detail {
+  display: flex;
+  flex-direction: column; /* Vertically stack content on small screens */
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.vehicle-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.vehicle-info {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--primary-color1);
+}
+
+.vehicle-info p {
+  color: var(--neutral-color1);
+}
 
 /* Styling for Tablets and smaller laptops*/
 @media (min-width: 600px) {
@@ -475,5 +500,20 @@ footer p:hover {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     padding: 2rem;
+  }
+
+  /*W03 vehicle detail styling desktop and large screen*/
+  .vehicle-detail {
+    flex-direction: row; /* Side-by-side layout */
+    align-items: flex-start;
+  }
+
+  .vehicle-image,
+  .vehicle-info {
+    flex: 1;
+  }
+
+  .vehicle-info {
+    padding-left: 2rem;
   }
 }

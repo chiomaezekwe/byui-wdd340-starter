@@ -25,7 +25,19 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
+// Added the method to fetch a single vehicle by ID W03 lines 29 - 39.
+async function getInventoryById(inv_id) {
+  try {
+    const sql = "SELECT * FROM public.inventory WHERE inv_id = $1"
+    const result = await pool.query(sql, [inv_id])
+    return result.rows[0] // only one item is expected to be returned
+  } catch (error) {
+    throw error
+  }
+}
 
-module.exports = {getClassifications}
+module.exports = {getClassifications, getInventoryByClassificationId,getInventoryById}
 
-module.exports = {getClassifications, getInventoryByClassificationId};
+
+
+
