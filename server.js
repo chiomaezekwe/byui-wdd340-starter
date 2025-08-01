@@ -30,10 +30,10 @@ app.set("layout", "./layouts/layout") // not at views root
  *************************/
 app.use(static)
 
-app.use(express.static("public"))  /* added this line*/
+app.use(express.static("public"))  /* added this line - W03*/
 
 // Inventory Routes
-app.use("/inv", inventoryRoute) /* added this line */
+app.use("/inv", inventoryRoute) /* added this line - W03*/
 
 // errorTest Route - W03
 app.use("/", errorTestRoute)  
@@ -93,7 +93,7 @@ app.use(async (req, res, next) => {
   const nav = await require("./utilities").getNav()
   res.status(404).render("errors/error", {
     title: "404 - Page Not Found",
-    message: "Oops! page not found.",
+    message: "Oops! Page not found.",
     nav,
     page: "error"
   })
