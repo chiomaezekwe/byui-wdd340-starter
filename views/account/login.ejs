@@ -1,0 +1,39 @@
+<% /* login.ejs - Login view */ %>
+  <h1><%= title %></h1>
+  <div class="form-container">
+
+    <% if (message) { %>
+      <div class="flash-message"><%= message %></div>
+    <% } %>
+
+    <form action="/account/login" method="POST" class="login-form">
+
+      <label for="account_email">Email:</label>
+      <input 
+        type="email" 
+        id="account_email" 
+        name="account_email" 
+        required 
+        <% if (typeof account_email !== 'undefined') { %>
+          value="<%= account_email %>"
+        <% } %>
+      >
+
+      <label for="account_password">Password:</label>
+      <input 
+        type="password" 
+        id="account_password" 
+        name="account_password" 
+        required
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+        title="Must be at least 12 characters and contain 1 capital letter, 1 number, and 1 special character." 
+      >
+
+      <button type="submit">Log In</button>
+    </form>
+
+    <p class="form-link">
+      Don't have an account?
+      <a href="/account/register">Register here</a>
+    </p>
+  </div>

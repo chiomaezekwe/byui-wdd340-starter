@@ -6,6 +6,11 @@
     <div id="wrapper">
         <%- include('../partials/header') %>
         <%- include('../partials/navigation') %>
+
+        <% if (flash.notice && flash.notice.length) { %>
+            <div class="flash-message"><%= flash.notice[0] %></div>
+        <% } %>
+        
         <main>
             <%- body %>
         </main>
