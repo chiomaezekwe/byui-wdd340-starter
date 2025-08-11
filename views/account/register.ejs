@@ -18,7 +18,7 @@
       type="text" 
       id="account_firstname" 
       name="account_firstname" 
-      required 
+      required value="<%= locals.account_firstname %>" 
       <% if (typeof account_firstname !== 'undefined') { %>
         value="<%= account_firstname %>"
       <% } %>
@@ -29,7 +29,7 @@
       type="text" 
       id="account_lastname" 
       name="account_lastname" 
-      required 
+      required value="<%= locals.account_lastname %>" 
       <% if (typeof account_lastname !== 'undefined') { %>
         value="<%= account_lastname %>"
       <% } %>
@@ -40,7 +40,7 @@
       type="email" 
       id="account_email" 
       name="account_email" 
-      required 
+      required value="<%= locals.account_email %>" 
       <% if (typeof account_email !== 'undefined') { %>
         value="<%= account_email %>"
       <% } %>

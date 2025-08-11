@@ -25,7 +25,7 @@ Util.getNav = async function (req, res, next) {
 Util.buildClassificationGrid = async function(data){
   let grid
   if(data.length > 0){
-    /* Modified this section lines 65 - 74 to fit my initial CSS styling W03*/
+    /* Modified this section lines 28 - 38 to fit my initial CSS styling W03*/
     grid = ''
     data.forEach(vehicle => {
         grid += '<figure>'
@@ -70,5 +70,27 @@ Util.handleErrors = function (fn) {
   };
 };
 
+/* ************************
+W04 - added function to build the classification dropdown list
+*************************** */
+
+Util.buildClassificationList = async function (classification_id = null) {
+  let data = await invModel.getClassifications()
+  let classificationList =
+    '<select name="classification_id" id="classificationList" required>'
+  classificationList += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    classificationList += '<option value="' + row.classification_id + '"'
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ) {
+      classificationList += " selected "
+    }
+    classificationList += ">" + row.classification_name + "</option>"
+  })
+  classificationList += "</select>"
+  return classificationList
+}
 
 module.exports = Util

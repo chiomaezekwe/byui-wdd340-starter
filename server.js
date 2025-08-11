@@ -19,6 +19,7 @@ const errorTestController = require('./controllers/errorTestController') /* W03 
 const accountRouter = require("./routes/accountRoute") /* added this line - W04 */
 const bodyParser = require("body-parser")  /* added this line - W04 */
 
+
 /*For Session package and DB connection - W04*/
 const session = require("express-session")
 const pool = require('./database/')
@@ -39,6 +40,7 @@ app.use(expressLayouts)
 app.use(express.urlencoded({ extended: true })) // for form submissions (application/x-www-form-urlencoded)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 
 /* Static Files */
 app.use(express.static("public"))  /* added this line - W03*/
@@ -88,6 +90,7 @@ app.get("/", (baseController.buildHome))
 
 app.get("/server-error", errorTestController.triggerError)
 
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
@@ -126,6 +129,6 @@ app.use(async (err, req, res, next) => {
     nav,
     page: "error"
   })
-});
+})
 
 

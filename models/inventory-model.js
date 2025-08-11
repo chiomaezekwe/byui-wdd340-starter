@@ -1,4 +1,5 @@
 const pool = require("../database/")
+const { body, validationResult } = require("express-validator");
 
 /* ***************************
  *  Get all classification data
@@ -36,7 +37,41 @@ async function getInventoryById(inv_id) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId,getInventoryById}
+async function addClassification(classification_name) {
+  try {
+    const sql = `
+      INSERT INTO public.classification (classification_name)
+      VALUES ($1)
+      RETURNING *;
+    `;
+    const result = await pool.query(sql, [classification_name]);
+    return result.rows[0];
+  } catch (error) {
+    console.error("addClassification error:", error);
+    throw error;
+  }
+}
+
+async function addInventory(data) {
+  const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color} = data;
+  const sql = `
+    INSERT INTO inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    RETURNING *;
+  `;
+  const values = [classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color];
+  const result = await pool.query(sql, values);
+  return result.rows[0];
+}
+
+
+module.exports = {
+  getClassifications, 
+  getInventoryByClassificationId, 
+  getInventoryById, 
+  addClassification, 
+  addInventory 
+}
 
 
 

@@ -3,6 +3,8 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 const utilities = require("../utilities")
+const { classificationRules, checkData, inventoryRules, checkInventoryData } = require("../utilities/inventory-validation")
+//const { inventoryRules, checkInventoryData } = require("../utilities/inventory-validation")
 
 //Route to build inventory by Classification view with validation
 //router.get("/type/:classificationId", invController.buildByClassificationId);
@@ -31,5 +33,38 @@ router.get("/type/:classificationId", async (req, res, next) => {
 
 // Add a new dynamic route for vehicle details W03
 router.get("/detail/:invId", invController.buildByInventoryId)
+
+// Route to Inventory Management View
+router.get("/", invController.buildManagementView)
+
+// Temporary routes (added to handle error 404)
+/*router.get("/add-classification", (req, res) => {
+  res.send("Add New Classification - Coming Soon")
+}); */
+
+/*router.get("/add-inventory", (req, res) => {
+  res.send("Add New Inventory - Coming Soon");
+});*/
+
+// Route to display form to add new classification
+router.get("/add-classification", invController.buildAddClassification);
+
+// Process form submission
+router.post("/add-classification",
+  classificationRules(), // validation middleware
+  checkData, // middleware that checks validation results
+  invController.addNewClassification // controller function
+);
+
+// Show add inventory form
+router.get("/add-inventory", invController.buildAddInventory);
+
+// Process form submission
+router.post(
+  "/add-inventory",
+  inventoryRules(),      // validation middleware
+  checkInventoryData,    // validation result handler
+  invController.addInventory      // controller logic
+);
 
 module.exports = router;

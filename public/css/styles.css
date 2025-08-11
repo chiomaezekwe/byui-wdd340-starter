@@ -386,6 +386,54 @@ button:hover {
   font-size: 1rem;
 }
 
+.error-box {
+  background-color: var(--accent-color1);
+  color: var(--secondary-color2);
+  border: 1px solid var(--accent-color2); 
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.error-box ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+#inv_description {
+  width: 100%;
+  resize: vertical; /* only vertical resizing alloewd */
+  font-size: 1rem;  
+  padding: 8px;     
+  box-sizing: border-box;
+}
+
+.inventory-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.inventory-container li {
+  margin-bottom: 1rem;
+}
+
+/* Style the links */
+.inventory-container a {
+  text-decoration: underline;
+  color: var(--primary-color1);
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;      /* Smooth color change */
+}
+
+/* On hover/focus */
+.inventory-container a:hover,
+.inventory-container a:focus {
+  color: var(--primary-color);        
+  outline: none;   /* To remove default outline when using keyboard to navigaye */
+}
 
 /* Footer styling */
 footer {
