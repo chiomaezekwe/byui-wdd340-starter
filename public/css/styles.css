@@ -527,6 +527,20 @@ footer p:hover {
   color: var(--secondary-color1); /* Delete */
 }
 
+.warning-text {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.delete-button {
+  background-color: #cc0000;
+  color: white;
+  padding: 0.6em 1.2em;
+  border: none;
+  cursor: pointer;
+}
+
 
 /* Styling for Tablets and smaller laptops*/
 @media (min-width: 600px) {

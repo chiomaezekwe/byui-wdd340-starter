@@ -91,4 +91,28 @@ router.post(
   utilities.handleErrors(invController.updateInventory) // controller function with error handling
 )
 
+// Helper to wrap async route handlers with try-catch
+function asyncHandler(cb) {
+  return async (req, res, next) => {
+    try {
+      await cb(req, res, next);
+    } catch (err) {
+      next(err); // Forward error to global error handler middleware
+    }
+  };
+}
+
+// Delete GET route with error handling, shows the delete confirmation page for a specific inventory item
+router.get(
+  "/delete/:inv_id",
+  asyncHandler(invController.buildDeleteInventoryView)
+);
+
+// Delete POST route with error handling, to perform the actual delete operation
+router.post(
+  "/delete",
+  asyncHandler(invController.deleteInventory)
+);
+
+
 module.exports = router;

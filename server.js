@@ -62,6 +62,7 @@ app.use(session({
 
 // Express Messages Middleware  - W04
 app.use(require('connect-flash')())
+
 app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
@@ -72,6 +73,11 @@ app.use(function (req, res, next) {
   res.locals.flash = req.flash("notice");
   next();
 })
+
+app.use((req, res, next) => {
+  res.locals.message = req.flash("notice");
+  next();
+});
 
 //app.use(function (req, res, next) {
   //res.locals.notice = req.flash("notice")

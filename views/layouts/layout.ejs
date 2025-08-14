@@ -7,8 +7,9 @@
         <%- include('../partials/header') %>
         <%- include('../partials/navigation') %>
 
-        <% if (flash.notice && flash.notice.length) { %>
-            <div class="flash-message"><%= flash.notice[0] %></div>
+        
+        <% if (message && message.length) { %>
+            <div class="flash-message"><%= message[0] %></div>
         <% } %>
         
         <main>
