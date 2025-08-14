@@ -1,8 +1,8 @@
-<% /* Add Inventory View */ %>
-<h1>Add New Vehicle Inventory</h1>
+<% /* Edit Inventory View */ %>
+<h1>Edit <%= inv_make %> <%= inv_model %></h1>
 
-<% if (message) { %>
-  <div class="flash-message"><%= message %></div>
+<% if (message && message.length > 0) { %>
+  <div class="flash-message"><%= message[0] %></div>
 <% } %>
 
 <% if (errors && errors.length > 0) { %>
@@ -15,9 +15,9 @@
   </div>
 <% } %>
 
-<form action="/inv/add-inventory" method="POST" class="form-container">
-  <%- classificationList %> <!-- Dropdown with sticky behavior -->
-  
+<form id="updateForm" action="/inv/update" method="POST" class="form-container">
+  <%- classificationSelect %> <!-- Dropdown with current selection -->
+
   <label for="inv_make">Make</label>
   <input type="text" id="inv_make" name="inv_make" required value="<%= inv_make || "" %>">
   
@@ -44,7 +44,13 @@
 
   <label for="inv_color">Color</label>
   <input type="text" id="inv_color" name="inv_color" required value="<%= inv_color || "" %>">
+
+  <!-- Hidden fields -->
+  <input type="hidden" name="inv_id" value="<%= inv_id %>">
+  <input type="hidden" name="classification_id" value="<%= classification_id %>">
   
-  
-  <button type="submit">Add Inventory</button>
+  <button type="submit" id="updateButton" disabled>Update Vehicle</button>
+  <input type="hidden" name="inv_id" value="<%= inv_id %>">
 </form>
+
+<script src="/js/inv-update.js"></script>

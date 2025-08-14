@@ -12,11 +12,10 @@
       </div>
     <% } %>
 
-    <% if (message) { %>
-      <div class="flash-message"><%= message %></div>
+    <% if (message && message.length > 0) { %>
+      <div class="flash-message"><%= message[0] %></div>
     <% } %>
-
-    <%# <form action="/account/login" method="POST" class="login-form"> %>
+    
     <form id="loginForm" action="/account/login" method="post" class="login-form">
 
       <label for="account_email">Email:</label>

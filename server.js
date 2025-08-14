@@ -18,7 +18,8 @@ const errorTestRoute = require("./routes/errorTestRoute") /* W03 errorTest */
 const errorTestController = require('./controllers/errorTestController') /* W03 errorTest */
 const accountRouter = require("./routes/accountRoute") /* added this line - W04 */
 const bodyParser = require("body-parser")  /* added this line - W04 */
-
+const cookieParser = require("cookie-parser") /*added this line to require the cookie-parser - w05 */
+const utilities = require("./utilities/")
 
 /*For Session package and DB connection - W04*/
 const session = require("express-session")
@@ -40,7 +41,9 @@ app.use(expressLayouts)
 app.use(express.urlencoded({ extended: true })) // for form submissions (application/x-www-form-urlencoded)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(cookieParser()) // for the cookieParser to be implemented throughout the project - w04
 
+app.use(utilities.checkJWTToken) // added this line - W05
 
 /* Static Files */
 app.use(express.static("public"))  /* added this line - W03*/
@@ -70,6 +73,10 @@ app.use(function (req, res, next) {
   next();
 })
 
+//app.use(function (req, res, next) {
+  //res.locals.notice = req.flash("notice")
+  //next();
+//})
 
 /* ***********************
  * Create Routes  after middleware is in place
@@ -110,7 +117,8 @@ app.listen(port, () => {
 
 // Catch 404 errors (Page Not Found)
 app.use(async (req, res, next) => {
-  const nav = await require("./utilities").getNav()
+  //const nav = await require("./utilities").getNav()
+  const nav = await utilities.getNav()
   res.status(404).render("errors/error", {
     title: "404 - Page Not Found",
     message: "Oops! Page not found.",
@@ -122,7 +130,8 @@ app.use(async (req, res, next) => {
 // Catch 500 error - Server Errors
 app.use(async (err, req, res, next) => {
   console.error("Middleware caught error:", err.message)
-  const nav = await require("./utilities").getNav()
+  //const nav = await require("./utilities").getNav()
+  const nav = await utilities.getNav()
   res.status(500).render("errors/error", {
     title: "500 - Internal Server Error",
     message: err.message,

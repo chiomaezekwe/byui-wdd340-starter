@@ -56,7 +56,14 @@ router.post(
   "/login",
   accountValidation.loginRules(),
   accountValidation.checkLoginData,
-  accountController.accountLogin
+  //accountController.accountLogin,
+  utilities.handleErrors(accountController.accountLogin)
+)
+
+// Default Account Management Route - W05
+router.get(
+  "/",
+  utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagement)
 )
 
 /* ***************************************

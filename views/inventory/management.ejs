@@ -2,14 +2,26 @@
 <div class="inventory-container">
   <h1>Vehicle Management</h1>
 
-  <% if (message) { %>
-    <div class="flash-message">
-      <%= message %>
-    </div>
+  <% if (message && message.length) { %>
+    <div class="notice"><%= message[0] %></div>
   <% } %>
 
   <ul>
     <li><a href="/inv/add-classification">Add New Classification</a></li>
     <li><a href="/inv/add-inventory">Add New Inventory</a></li>
   </ul>
+  <h2>Manage Inventory</h2>
+
+  <p>Select a classification from the list to see the items in that classification.</p>
+  <!-- Display classification dropdown - W05 -->
+
+  <%- classificationSelect %>
+
+  <!-- W05 an empty HTML table-->
+  <table id="inventoryDisplay"></table>
+
+  <!-- W05 noscript fallback message -->
+  <noscript>JavaScript must be enabled to use this page.</noscript>
 </div>
+
+<script src="../../js/inventory.js"></script>

@@ -2,7 +2,7 @@
 <html lang="en">
 <%- include('../partials/head') %>
 
-<body data-page="<%= page %>">
+<body data-page="<%= typeof page !== 'undefined' ? page : '' %>">
     <div id="wrapper">
         <%- include('../partials/header') %>
         <%- include('../partials/navigation') %>
