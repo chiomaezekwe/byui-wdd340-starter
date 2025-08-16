@@ -4,11 +4,9 @@ const router = new express.Router()
 const invController = require("../controllers/invController")
 const utilities = require("../utilities")
 const { classificationRules, checkData, inventoryRules, checkInventoryData, checkUpdateData } = require("../utilities/inventory-validation")
-//const { inventoryRules, checkInventoryData } = require("../utilities/inventory-validation")
+const checkEmployeeOrAdmin = require("../utilities/checkEmployeeOrAdmin");
 
-//Route to build inventory by Classification view with validation
-//router.get("/type/:classificationId", invController.buildByClassificationId);
-
+/*w05 defining distinct route for employee or admin */
 router.get("/type/:classificationId", async (req, res, next) => {
   try {
     const { classificationId } = req.params;
@@ -36,15 +34,6 @@ router.get("/detail/:invId", invController.buildByInventoryId)
 
 // Route to Inventory Management View
 router.get("/", invController.buildManagementView)
-
-// Temporary routes (added to handle error 404)
-/*router.get("/add-classification", (req, res) => {
-  res.send("Add New Classification - Coming Soon")
-}); */
-
-/*router.get("/add-inventory", (req, res) => {
-  res.send("Add New Inventory - Coming Soon");
-});*/
 
 // Route to display form to add new classification
 router.get("/add-classification", invController.buildAddClassification);
@@ -114,5 +103,17 @@ router.post(
   asyncHandler(invController.deleteInventory)
 );
 
+// Admin-only views/processes
+router.get("/add-classification", checkEmployeeOrAdmin, utilities.handleErrors(invController.buildAddClassification));
+router.post("/add-classification", checkEmployeeOrAdmin, utilities.handleErrors(invController.addClassification));
+
+router.get("/add-inventory", checkEmployeeOrAdmin, utilities.handleErrors(invController.buildAddInventory));
+router.post("/add-inventory", checkEmployeeOrAdmin, utilities.handleErrors(invController.addInventory));
+
+router.get("/edit/:inv_id", checkEmployeeOrAdmin, utilities.handleErrors(invController.buildEditInventory));
+router.post("/update/", checkEmployeeOrAdmin, utilities.handleErrors(invController.updateInventory));
+
+router.get("/delete/:inv_id", checkEmployeeOrAdmin, utilities.handleErrors(invController.buildDeleteInventory));
+router.post("/delete/", checkEmployeeOrAdmin, utilities.handleErrors(invController.deleteInventory));
 
 module.exports = router;

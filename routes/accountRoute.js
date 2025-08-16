@@ -2,71 +2,89 @@
  *  Required Resources (External)
  * ****************************** */
 const express = require("express");
-//const regValidate = require("../utilities/account-validation");  /*added this line W04*/
 const router = new express.Router();
-const utilities = require("../utilities"); 
+const utilities = require("../utilities");
 const accountController = require("../controllers/accountController");
 const accountValidation = require("../utilities/account-validation");
 
-console.log(accountController); // See if buildLogin exists
+/* **************************************************************
+ * GET route to show login view
+ * *************************************************************** */
+router.get(
+  "/login",
+  utilities.handleErrors(accountController.buildLogin)
+);
 
 /* **************************************************************
- * GET route for "/account" (when "My Account" link is clicked)
+ * GET route to show registration view
  * *************************************************************** */
-//router.get("/", utilities.handleErrors(accountController.buildAccountHome));
-router.get("/login", utilities.handleErrors(accountController.buildLogin));
-//router.get("/login", accountController.buildLogin);
-
-// Route for registration view
-router.get("/register", utilities.handleErrors(accountController.buildRegister))
-
-//router.post('/register', utilities.handleErrors(accountController.registerAccount))
-
-// POST handler for registration
-/*router.post(
+router.get(
   "/register",
-  utilities.handleErrors(accountController.registerAccount)
-)*/
+  utilities.handleErrors(accountController.buildRegister)
+);
 
-// Process the registration data
-/*router.post(
-  "/register",
-  regValidate.registrationRules(), // validate rules
-  regValidate.checkRegData, //Handles error if found
-  utilities.handleErrors(accountController.registerAccount) // controller
-) */
-
+/* **************************************************************
+ * POST route to handle registration
+ * *************************************************************** */
 router.post(
   "/register",
-  accountValidation.registrationRules(), // validate rules
-  accountValidation.checkRegData, //Handles error if found
-  utilities.handleErrors(accountController.registerAccount) // controller
-)
+  accountValidation.registrationRules(),
+  accountValidation.checkRegData,
+  utilities.handleErrors(accountController.registerAccount)
+);
 
-// Process the login attempt - added for successful testing lines 37 - 43 - W04
-/*router.post(
-  "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
-)*/
-
-// POST login
+/* **************************************************************
+ * POST route to handle login
+ * *************************************************************** */
 router.post(
   "/login",
   accountValidation.loginRules(),
   accountValidation.checkLoginData,
-  //accountController.accountLogin,
   utilities.handleErrors(accountController.accountLogin)
-)
+);
 
-// Default Account Management Route - W05
+/* **************************************************************
+ * GET route for Account Management Dashboard (Protected)
+ * *************************************************************** */
 router.get(
   "/",
-  utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagement)
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccountManagement)
+);
+
+/* **************************************************************
+ * GET route to handle based role access
+ * *************************************************************** */
+router.get(
+  "/update/:account_id",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildUpdateAccount)
 )
 
+/* **************************************************************
+ * GET route to logout
+ * *************************************************************** */
+router.get("/logout", accountController.logout);
+
+// Update Account Profile Route
+
+
+// POST account info update
+router.post("/update",
+  accountValidation.updateAccountRules(),
+  accountValidation.checkUpdateData,
+  utilities.handleErrors(accountController.updateAccount)
+)
+
+// POST password change
+router.post("/update-password",
+  accountValidation.passwordRules(),
+  accountValidation.checkPasswordData,
+  utilities.handleErrors(accountController.changePassword)
+)
+
+
 /* ***************************************
- * Exports the router for use in server.js
+ * Export the router
  * *************************************** */
 module.exports = router;

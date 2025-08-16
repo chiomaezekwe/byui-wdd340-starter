@@ -77,6 +77,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
  * ************************** */
 invCont.buildManagementView = async function (req, res, next) {
   try {
+     console.log("Inside buildManagementView"); 
     const nav = await utilities.getNav()
     const message = req.flash("notice")
     const classificationSelect = await utilities.buildClassificationList() // W05 - classification sekect code added

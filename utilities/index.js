@@ -126,13 +126,38 @@ Util.checkJWTToken = (req, res, next) => {
  *  Check Login - W05
  * ************************************ */
  Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
+ // if (res.locals.loggedin) {
+ if (req.session && req.session.account) {
     next()
   } else {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
   }
  }
+
+//const jwt = require("jsonwebtoken")
+
+Util.checkLoginStatus = function (req, res, next) {
+  const token = req.cookies.jwt
+
+  if (req.session && req.session.account) {
+    res.locals.loggedIn = true
+    res.locals.clientName = req.session.account.account_firstname
+  } else if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+      res.locals.loggedIn = true
+      res.locals.clientName = decoded.account_firstname
+    } catch (err) {
+      res.locals.loggedIn = false
+      res.locals.clientName = null
+    }
+  } else {
+    res.locals.loggedIn = false
+    res.locals.clientName = null
+  }
+  next()
+}
 
 
 module.exports = Util

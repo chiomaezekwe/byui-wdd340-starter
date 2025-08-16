@@ -1,6 +1,6 @@
 <div class="form-container">
     <h1><%= title %></h1>
-    <% if (flash.notice && flash.notice.length) { %>
+    <% if (typeof flash !== 'undefined' && flash.notice && flash.notice.length) { %>
       <div class="notice"><%= flash.notice[0] %></div>
     <% } %>
 

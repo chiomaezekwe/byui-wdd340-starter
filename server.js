@@ -5,8 +5,9 @@
 /* ***********************
  * Require Statements
  *************************/
+require("dotenv").config(); 
 const express = require("express")
-const env = require("dotenv").config()
+//const env = require("dotenv").config()
 //console.log("DATABASE_URL from .env:", process.env.DATABASE_URL)
 const app = express()
 const static = require("./routes/static")
@@ -20,6 +21,10 @@ const accountRouter = require("./routes/accountRoute") /* added this line - W04 
 const bodyParser = require("body-parser")  /* added this line - W04 */
 const cookieParser = require("cookie-parser") /*added this line to require the cookie-parser - w05 */
 const utilities = require("./utilities/")
+
+const jwt = require("jsonwebtoken");
+const secretKey = process.env.ACCESS_TOKEN_SECRET || "fallback-secret-key"; 
+const utils = require("./utilities")
 
 /*For Session package and DB connection - W04*/
 const session = require("express-session")
@@ -68,21 +73,45 @@ app.use(function(req, res, next){
   next()
 })
 
-// Make flash messages available to all views
-app.use(function (req, res, next) {
-  res.locals.flash = req.flash("notice");
-  next();
-})
-
+// Make flash messages available to all views //14082025
 app.use((req, res, next) => {
   res.locals.message = req.flash("notice");
   next();
 });
 
-//app.use(function (req, res, next) {
-  //res.locals.notice = req.flash("notice")
-  //next();
-//})
+/* W05 check login status on all request*/
+
+app.use(utils.checkLoginStatus)
+app.use(require("./utilities").checkLoginStatus)
+
+
+const accountRoutes = require('./routes/accountRoute');
+app.use('/account', accountRoutes);
+
+
+// Middleware to check JWT and set login info
+app.use((req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, secretKey); // Verify token using secret
+      res.locals.loggedIn = true;
+      res.locals.clientName = decoded.first_name; // Customize this based on your payload
+    } catch (err) {
+      // Token is invalid or expired
+      res.locals.loggedIn = false;
+      res.locals.clientName = null;
+    }
+  } else {
+    // No token found
+    res.locals.loggedIn = false;
+    res.locals.clientName = null;
+  }
+  
+  next();
+});
+
 
 /* ***********************
  * Create Routes  after middleware is in place
@@ -145,5 +174,6 @@ app.use(async (err, req, res, next) => {
     page: "error"
   })
 })
+
 
 
