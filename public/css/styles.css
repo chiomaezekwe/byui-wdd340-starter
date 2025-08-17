@@ -80,6 +80,10 @@ header {
   font-weight: bold;   
 }
 
+#tools li {
+  list-style: none;
+}
+
 #tools a {
   font-weight: 500;
 }
