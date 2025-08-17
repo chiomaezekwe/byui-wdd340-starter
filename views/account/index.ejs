@@ -20,14 +20,22 @@
 <% if (account) { %>
   <h2>Welcome <%= account.account_firstname %></h2>
 
+  <%# W06 - Enhancement lines 23 - 28, this will handle new users with null as last login timestamp %>
+  <% if (account.last_login) { %>
+    <p class="last-login">Last login: <%= new Date(account.last_login).toLocaleString() %></p>
+  <% } else { %>
+    <p class="last-login">Last login: Never</p>
+  <% } %>
+
+
   <p>
-    <a href="/account/update/<%= account.account_id %>">Update Account Information</a>
+    <a href="/account/update/<%= account.account_id %>" class="update-account-link">Update Account Information</a>
   </p>
 
   <% if (account.account_type === 'Employee' || account.account_type === 'Admin') { %>
     <h3>Inventory Management</h3>
     <p>
-      <a href="/inv">Go to Inventory Management</a>
+      <a href="/inv" class="inventory-link">Go to Inventory Management</a>
     </p>
   <% } %>
 <% } %>

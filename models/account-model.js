@@ -66,34 +66,9 @@ async function getAccountByEmail (account_email) {
 }
 
 /* *****************************
- * Return account data using account_id
- * ***************************** */
-/*async function getAccountById(account_id) {
-  try {
-    const result = await pool.query(
-      'SELECT account_id, account_firstname, account_lastname, account_email, account_type FROM account WHERE account_id = $1',
-      [account_id]
-    )
-    return result.rows[0]
-  } catch (error) {
-    throw new Error("No matching account found")
-  }
-}*/
-
-
-/* *****************************
  * Get account data using account_id and Update account profile
  * ***************************** */
 /*async function getAccountById(account_id) {
-  try {
-    const result = await pool.query("SELECT * FROM account WHERE account_id = $1", [account_id])
-    return result.rows[0]
-  } catch (error) {
-    return new Error("No matching account found")
-  }
-}*/
-
-async function getAccountById(account_id) {
   try {
     const result = await pool.query(
       "SELECT account_id, account_firstname, account_lastname, account_email, account_type FROM account WHERE account_id = $1",
@@ -104,8 +79,24 @@ async function getAccountById(account_id) {
     console.error("Error in getAccountById:", error)
     return null
   }
-}
+} */
 
+//W06 - Modified  version of the function getAccountById to capture users' last login time stamp
+// by including "last_login" to the slected columns in the pool.query
+// added lines 84 - 99 Enhancement done - W06
+  async function getAccountById(account_id) {
+  try {
+    const result = await pool.query(
+      `SELECT account_id, account_firstname, account_lastname, account_email, account_type, last_login
+       FROM account WHERE account_id = $1`,
+      [account_id]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error in getAccountById:", error);
+    return null;
+  }
+}
 
 async function updateAccount(account_id, firstname, lastname, email) {
   try {
@@ -127,6 +118,21 @@ async function updatePassword(account_id, hashedPassword) {
   }
 }
 
+/* W06 Enhancement code lines 121 - 134  adding a function to update users last login time stamp*/
+/* *****************************
+ *  W06 Update last login timestamp of Profiled Users
+ * ***************************** */
+async function updateLastLogin(account_id) {
+  try {
+    const sql = `UPDATE account SET last_login = NOW() WHERE account_id = $1`;
+    const result = await pool.query(sql, [account_id]);
+    return result.rowCount > 0;
+  } catch (error) {
+    console.error("Error updating last login:", error);
+    return false;
+  }
+}
+
 
 // Export the function
 module.exports = { 
@@ -135,5 +141,6 @@ module.exports = {
   getAccountByEmail,
   getAccountById,
   updateAccount,
-  updatePassword 
+  updatePassword,
+  updateLastLogin    //added this line 145 Ehancement done W06
 }

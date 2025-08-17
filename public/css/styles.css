@@ -541,6 +541,41 @@ footer p:hover {
   cursor: pointer;
 }
 
+/* design account management page  */
+main p {
+  margin: 10px 10px;
+}
+
+p.last-login {
+  color: var(--secondary-color1);
+}
+
+a.update-account-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+a.update-account-link:hover {
+  color: var(--secondary-color);  
+  text-decoration: underline;   
+}
+
+a.inventory-link {
+  color: var(--primary-color); 
+  text-decoration: underline;   
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  padding: 10px 10px;
+}
+
+a.inventory-link:hover {
+  color: var(--secondary-color);  
+  text-decoration: underline;   
+}
+
+/**/
 
 /* Styling for Tablets and smaller laptops*/
 @media (min-width: 600px) {

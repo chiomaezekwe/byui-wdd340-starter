@@ -127,13 +127,20 @@ accountController.accountLogin = async (req, res, next) => {
       });
     }
 
+    // W06 - Updating user's last_login timestamp. Enhancement Line 130 - 134 - W06
+    await accountModel.updateLastLogin(accountData.account_id);
+    //console.log("Last login update attempted for ID:", accountData.account_id); // debuggin purpose
+
+    const updatedAccountData = await accountModel.getAccountById(accountData.account_id);
+
     // Generate JWT payload
     const accountPayload = {
       account_id: accountData.account_id,
       account_firstname: accountData.account_firstname,
       account_lastname: accountData.account_lastname,
       account_email: accountData.account_email,
-      account_type: accountData.account_type
+      account_type: accountData.account_type,
+      last_login: updatedAccountData.last_login // W06 - added this line 143 to add user's login time stamp to the payload
     };
 
     // Generate JWT and set cookie
@@ -159,57 +166,6 @@ accountController.accountLogin = async (req, res, next) => {
   }
 };
 
-/*accountController.accountLogin = async (req, res, next) => {
-  try {
-    const { account_email, account_password } = req.body
-    const nav = await utilities.getNav()
-    const accountData = await accountModel.getAccountByEmail(account_email)
-
-    if (!accountData) {
-      return res.status(401).render("account/login", {
-        title: "Login",
-        nav,
-        message: null,
-        errors: [{ msg: "Invalid email or password." }],
-        account_email,
-        page: "account",
-        layout: "./layouts/layout"
-      })
-    }
-
-    const passwordMatch = await bcrypt.compare(account_password, accountData.account_password)
-
-    if (!passwordMatch) {
-      return res.status(401).render("account/login", {
-        title: "Login",
-        nav,
-        message: null,
-        errors: [{ msg: "Invalid email or password." }],
-        account_email,
-        page: "account",
-        layout: "./layouts/layout"
-      })
-    }
-
-    // Set session
-    req.session.account = {
-      account_id: accountData.account_id,
-      account_firstname: accountData.account_firstname,
-      account_lastname: accountData.account_lastname,
-      account_email: accountData.account_email,
-      account_type: accountData.account_type
-    }
-
-    // Save session before redirecting
-    req.session.save(() => {
-    req.flash("notice", `Welcome back, ${accountData.account_firstname}!`)
-    res.redirect("/account")
-  })
-  } catch (error) {
-    next(error)
-  }
-}*/
-
 /* ============================
  * Account Management View
  * ============================ */
@@ -226,29 +182,6 @@ accountController.buildAccountManagement = async (req, res) => {
     layout: "./layouts/layout"
   })
 }
-
-/* ============================
- * Account Upadte by Roles
- * ============================ */
-/*accountController.buildUpdateAccount = async (req, res, next) => {
-  const nav = await utilities.getNav()
-  const account_Id = req.params.account_Id
-  const accountData = await accountModel.getAccountById(accountId)
-
-  if (!accountData) {
-    req.flash("notice", "Account not found.")
-    return res.redirect("/account")
-  }
-
-  res.render("account/update-account", {
-    title: "Update Account",
-    nav,
-    account: accountData,
-    message: null,
-    errors: null,
-    layout: "./layouts/layout"
-  })
-} */
 
 /* ============================
  * Account Profile Upadte Management
